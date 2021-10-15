@@ -2,7 +2,7 @@
 SamePixels compares images and returns an image of only the pixels that match (or differ).
 
 ## Installation
-You can compile the source with `./gradlew build`. After that you can copy the jar file from `./build/libs/`.
+You can compile the source with `./gradlew uberJar`. After that you can copy the jar file from `./build/libs/`.
 
 ## Usage
 ```bash
