@@ -1,0 +1,42 @@
+plugins {
+    id 'java'
+}
+
+group 'org.mazarineblue.samepixels'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'commons-cli:commons-cli:20040117.000000'
+    testImplementation 'org.awaitility:awaitility:4.1.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+jar {
+    manifest {
+        attributes("Main-Class": "org.mazarineblue.samepixels.Main")
+    }
+}
+
+tasks.register('uberJar', Jar) {
+    manifest {
+        attributes("Main-Class": "org.mazarineblue.samepixels.Main")
+    }
+
+    archiveClassifier = 'all'
+    from sourceSets.main.output
+    dependsOn configurations.runtimeClasspath
+    from {
+        configurations.runtimeClasspath.findAll { it.name.endsWith('jar') }
+                .collect { zipTree(it) }
+    }
+}
